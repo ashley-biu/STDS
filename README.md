@@ -97,3 +97,38 @@ Note:
     If you need any other extra help related to lfs, you could check these websites:
 
     https://git-lfs.github.com/
+    
+    
+    
+  
+### Create a Commit with Multiple Authors
+
+- Helps with collaboration work and giving credit! 
+- You may also receive a GitHub achievement for co-authoring a couple of times! 
+
+[Docs](https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors)
+
+- Type your commit message and a short, meaningful description of your changes. 
+- After your commit description, instead of a closing quotation, add two empty lines.
+
+e.g.
+```
+
+$ git commit -m "Refactor usability tests.
+>
+>
+Co-authored-by: name <name@example.com>
+Co-authored-by: another-name <another-name@example.com>"
+
+
+```
+
+  
+### Guide to help with writing clean code
+
+[Tidyverse Style Guide](https://style.tidyverse.org/)
+
+
+
+
+
