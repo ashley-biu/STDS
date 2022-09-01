@@ -29,6 +29,7 @@ Basic Git Commands That You Might Need
 
 Git Commands Related to Branch Management
 
+
 Basic branching:
 
     git checkout -b <branch_name> --> To create a new branch and switch to it at the same time
@@ -97,3 +98,60 @@ Note:
     If you need any other extra help related to lfs, you could check these websites:
 
     https://git-lfs.github.com/
+    
+    
+
+# Esther's Additions 
+  
+### Create a Commit with Multiple Authors
+
+- Helps with collaboration work and giving credit! :clap:
+  
+- You may also receive a GitHub achievement for co-authoring a couple of times! :trophy:
+
+
+#### How to Add Extra Authors 
+- Type your commit message and a short, meaningful description of your changes. 
+- After your commit description, instead of a closing quotation, add two empty lines.
+- On the next line of the commit message, type Co-authored-by: name <name@example.com> with specific information for each co-author. After the co-author information, add a closing quotation mark.
+
+e.g.
+```
+
+$ git commit -m "Refactor usability tests.
+>
+>
+Co-authored-by: name <name@example.com>
+Co-authored-by: another-name <another-name@example.com>"
+
+
+```
+
+[Additional Docs for Multiple Authors](https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors)
+
+
+  
+## Guide to help with writing clean code
+
+Try your best to follow some of the tips in this [Tidyverse Style Guide](https://style.tidyverse.org/). Clean code shows you care about your team mates who will have to either spend a lot of time understanding what the hell is going on or cleaning it up! It will also help you remember   :sparkles:
+
+<center>
+
+
+<img src="https://preview.redd.it/yxams8xqlr141.jpg?auto=webp&s=bbe0abcd909c74890f57131e72186a47ce1a8f15" width="400">
+
+
+
+
+# Important Git Rules
+
+
+:warning: Do not **ever** push on master/main. :warning:
+
+I repeat
+
+:warning: Do not **EVER** push on master/main. :warning:
+
+</center>
+
+
