@@ -155,3 +155,6 @@ I repeat
 </center>
 
 
+# Practice Repository
+
+[Practice using GitHub using this practice repo](https://github.com/esthercsoke/practice-repo)
