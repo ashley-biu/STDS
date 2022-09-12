@@ -1,0 +1,78 @@
+---
+title: "Report Title"
+subtitle: 'SetteSeven'
+output:
+  bookdown::html_document2:
+    theme: lumen
+    fig_caption: true
+    fig_retina: 1
+    force_captions: yes
+    toc: yes
+    toc_depth: 2
+    scroll_highlight: true
+    linkcolor: 'black'
+    toc_float: yes
+    number_sections: no
+    collapsed: yes
+    highlight: monochrome
+    df_print: "kable"
+    code_folding: hide
+    link-citations: true
+    config:
+      toc:
+        collapse: section
+---
+
+```{r Libraries}
+
+
+# load Pacman (package management tool)
+library(pacman)
+
+# This function is a wrapper for library and require.
+# It checks to see if a package is installed,
+# if not it attempts to install the package from CRAN and/or any other repository in the pacman repository list.
+pacman::p_load(tidyverse, RefManageR, bibtex)
+
+
+```
+
+
+```{r setup, include=FALSE}
+
+
+# global knitr options.
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.align = "center",
+  fig.showtext = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  dpi = 300,
+  out.width = "100%",
+  res = 500,
+  retina = 1
+)
+ 
+
+```
+
+> FILE HAS NOT BEEN STYLED. LETS NOT STYLE IT UNTIL WE HAVE COMPLETED THE REPORT! ^_^ 
+> Also IDK if you guys want a TOC on the side. It can be removed.
+
+
+# Executive Summary
+
+# Introduction
+
+# Methods 
+
+# Results
+
+# Discussion
+
+# Conclusion
+
+
+
+
