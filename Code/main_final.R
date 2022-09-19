@@ -297,33 +297,15 @@ twi_data_1 <- twi_data_1 %>%
 twi_data_2 <- twi_data_2 %>%
   drop_na()
 
+# add dates to 
+twi_data_1$`Series ID` <- as.Date(twi_data_1$`Series ID`, format = "%d-%b-%Y")
+twi_data_2$`Series ID` <- as.Date(twi_data_2$`Series ID`, format = "%d-%b-%y")
+
 # Combine TWI datasets
 twi_data <- rbind(twi_data_1, twi_data_2)
 
 # rename twi columns for data hygiene
 twi_data <- rename(twi_data, c(date = `Series ID`, twi = FXRTWI))
-
-# convert date column to date datatype
-twi_data$date <- as.Date(twi_data$date, format = "%d-%b-%y")
-
-# create new column for month from date
-twi_data$month <- strftime(twi_data$date, "%m")
-
-# create new column for year from date
-twi_data$year <- strftime(twi_data$date, "%Y")
-
-# remove date column from twi_data
-twi_data <- twi_data %>%
-  select(-date)
-
-#find twi by year
-twi_yearly <- twi_data %>%
-  group_by(year) %>%
-  dplyr::summarize(TWI_data = mean(twi, na.rm = TRUE)) %>%
-  as.data.frame()
-
-# add annual twi to final analysis data
-research_data <- merge(research_data, twi_yearly)
 
 
 
