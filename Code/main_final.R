@@ -10,7 +10,7 @@ library(DataExplorer)
 
 # Load in fatalities data
 fatal_crashes <-
-  read_csv("Data_files/ardd_fatal_crashes_jul2022.csv")
+  read_csv("Data/ardd_fatal_crashes_jul2022.csv")
 
 # Convert fatal crashes df to tibble
 fatal_crashes <- as_tibble(fatal_crashes)
@@ -61,7 +61,7 @@ research_data <- yearly_fatalities
 
 # Read in dataset
 petrol <-
-  read_excel("Data_files/AIP_Annual_Retail_Price_Data.xlsx", sheet = "Average Petrol Retail")
+  read_excel("Data/AIP_Annual_Retail_Price_Data.xlsx", sheet = "Average Petrol Retail")
 
 # Convert petrol dataset to tibble
 petrol <- as_tibble(petrol)
@@ -90,7 +90,7 @@ research_data <- merge(research_data, nsw_petrol)
 
 # Load in dataset
 cpi_data <- read_excel(
-  "Data_files/CPI_Weighted average.xlsx",
+  "Data/CPI_Weighted average.xlsx",
   sheet = "Data1",
   range = cell_cols("A:B"),
   col_types = c("date", "numeric")
@@ -126,7 +126,7 @@ research_data <- merge(research_data, cpi_yearly)
 
 
 # import employment data
-employment <- read_csv("Data_files/ABS_NSW_emp.csv")
+employment <- read_csv("Data/ABS_NSW_emp.csv")
 
 # set employment to a tibble
 employment <- as_tibble(employment)
@@ -162,7 +162,7 @@ research_data <- merge(research_data, nsw_emp_yearly)
 
 
 # Import ABS NSW population data
-nsw_population <- read_csv("Data_files/ABS_NSW_pop_sum.csv")
+nsw_population <- read_csv("Data/ABS_NSW_pop_sum.csv")
 
 # Convert nsw population df to tibble
 nsw_population <- as_tibble(nsw_population)
@@ -216,7 +216,7 @@ research_data <- merge(research_data, nsw_youth_prop_yearly)
 
 # Import gdp aus data
 gdp_qrtly <-
-  read_csv("Data_files/AUSTRALIA_QUARTERLY_GDP_PER_CAPITA.csv")
+  read_csv("Data/AUSTRALIA_QUARTERLY_GDP_PER_CAPITA.csv")
 
 # convert gdp dataset to tibble
 gdp_qrtly <- as_tibble(gdp_qrtly)
@@ -245,7 +245,7 @@ research_data <- merge(research_data, gdp_yearly)
 
 # Import NSW registration data
 nsw_vehicles_registered <-
-  read_excel("Data_files/NSW_vehicles_registered.xlsx")
+  read_excel("Data/NSW_vehicles_registered.xlsx")
 
 # convert nsw registration data to tibble
 nsw_vehicles_registered <- as_tibble(nsw_vehicles_registered)
@@ -276,7 +276,7 @@ research_data <- merge(research_data, registerd_vehicles_yearly)
 # TWI AUS DATA ---------------------------
 
 
-twi_exchange_data <- read_csv("Data_files/twi_exchange_data.csv")
+twi_exchange_data <- read_csv("Data/twi_exchange_data.csv")
 
 # select date rows and twi
 twi_data <- twi_exchange_data %>%
