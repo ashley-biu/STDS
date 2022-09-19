@@ -4,11 +4,15 @@ library(lubridate)
 library(readxl)
 library(zoo)
 
+configure_settings <- function() {
+  Sys.setlocale("LC_TIME", "C")
+}
+
 load_crash_data <- function(research_data){
 
         # Load in fatalities data
     fatal_crashes <-
-    read_csv("Data/ardd_fatal_crashes_jul2022.csv")
+    read_csv("STDS/STDS_AT2_2022/Data/ardd_fatal_crashes_jul2022.csv")
 
     # Convert fatal crashes df to tibble
     fatal_crashes <- as_tibble(fatal_crashes)
@@ -72,7 +76,7 @@ load_petrol_data <- function(research_data) {
 
     # Read in dataset
     petrol <-
-    read_excel("Data/AIP_Annual_Retail_Price_Data.xlsx",
+    read_excel("STDS/STDS_AT2_2022/Data/AIP_Annual_Retail_Price_Data.xlsx",
                 sheet = "Average Petrol Retail")
 
     # Convert petrol dataset to tibble
@@ -104,7 +108,7 @@ load_petrol_data <- function(research_data) {
 load_CPI_data <- function(research_data) {
   # Load in dataset
   cpi_data <- read_excel(
-    "Data/CPI_Weighted average.xlsx",
+    "STDS/STDS_AT2_2022/Data/CPI_Weighted average.xlsx",
     sheet = "Data1",
     range = cell_cols("A:B"),
     col_types = c("date", "numeric")
@@ -146,7 +150,7 @@ load_CPI_data <- function(research_data) {
 
 load_employment_data <- function(research_data) {
   # import employment data
-  employment <- read_csv("Data/ABS_NSW_emp.csv")
+  employment <- read_csv("STDS/STDS_AT2_2022/Data/ABS_NSW_emp.csv")
   
   # set employment to a tibble
   employment <- as_tibble(employment)
@@ -190,7 +194,7 @@ load_employment_data <- function(research_data) {
 # NSW POPULATION DATA ---------------------------
 
 load_NSW_population_data <- function(research_data){
-  nsw_population <- read_csv("Data/ABS_NSW_pop_sum.csv")
+  nsw_population <- read_csv("STDS/STDS_AT2_2022/Data/ABS_NSW_pop_sum.csv")
   # Convert nsw population df to tibble
   nsw_population <- as_tibble(nsw_population)
   nsw_population <- nsw_population %>% rename(time_frame = `TIME_PERIOD: Time Period`,
@@ -220,7 +224,7 @@ load_NSW_population_data <- function(research_data){
 load_GDP_data <- function(research_data) {
   # Import gdp aus data
   gdp_qrtly <-
-    read_csv("Data/AUSTRALIA_QUARTERLY_GDP_PER_CAPITA.csv")
+    read_csv("STDS/STDS_AT2_2022/Data/AUSTRALIA_QUARTERLY_GDP_PER_CAPITA.csv")
   
   # convert gdp dataset to tibble
   gdp_qrtly <- as_tibble(gdp_qrtly)
@@ -243,7 +247,7 @@ load_GDP_data <- function(research_data) {
 load_registration_data <- function(research_data) {
   # Import NSW registration data
   nsw_vehicles_registered <-
-    read_excel("Data/NSW_vehicles_registered.xlsx")
+    read_excel("STDS/STDS_AT2_2022/Data/NSW_vehicles_registered.xlsx")
   
   # convert nsw registration data to tibble
   nsw_vehicles_registered <- as_tibble(nsw_vehicles_registered)
@@ -279,17 +283,32 @@ load_registration_data <- function(research_data) {
 # TWI AUS DATA ---------------------------
 
 load_TWI_data <- function(research_data) {
-  twi_exchange_data <- read_csv("Data/twi_exchange_data.csv")
+  # load TWI first dataset containing years 1969 to 2009
+  twi_exchange_data_1 <- read_csv("STDS/STDS_AT2_2022/Data/twi_data_1969_2009.csv")
+  # load TWI second dataset containing years 2010 to 2022
+  twi_exchange_data_2 <- read_csv("STDS/STDS_AT2_2022/Data/twi_data_2010_2022.csv")
   
-  # select date rows and twi
-  twi_data <- twi_exchange_data %>%
+  # select date and twi colummns from TWI dataset 1
+  twi_data_1 <- twi_exchange_data_1 %>%
+    select(`Series ID`, FXRTWI)
+  # select date and twi colummns from TWI dataset 2
+  twi_data_2 <- twi_exchange_data_2 %>%
     select(`Series ID`, FXRTWI)
   
-  ## rename twi columns for data hygiene
-  twi_data = rename(twi_data, c(date = `Series ID`, twi = FXRTWI))
+  # remove NA values from twi_data_1 (empty twi values from first 10 rows)
+  twi_data_1 <- twi_data_1 %>%
+    drop_na()
   
-  # convert date column to date datatype
-  twi_data$date <- as.Date(twi_data$date, format = "%d-%b-%y")
+  twi_data_1 <- rename(twi_data_1, c(date = `Series ID`, twi = FXRTWI))
+  twi_data_1$date <- as.Date(twi_data_1$date, format = "%d-%b-%Y")
+  # remove NA values from twi_data_2 (empty rows from end of dataset)
+  twi_data_2 <- twi_data_2 %>%
+    drop_na()
+  twi_data_2 <- rename(twi_data_2, c(date = `Series ID`, twi = FXRTWI))
+  twi_data_2$date <- as.Date(twi_data_2$date, format = "%d-%b-%y")
+  
+  # Combine TWI datasets
+  twi_data <- rbind(twi_data_1, twi_data_2)
   
   # create new column for month from date
   twi_data$month <- month(twi_data$date)
@@ -328,3 +347,14 @@ load_datasets <- function() {
 
   return(research_data)
 }
+
+configure_settings()
+test <- load_crash_data(NULL)
+test2 <- load_CPI_data(test)
+test3 <- load_employment_data(test2)
+test4 <- load_NSW_population_data(test3)
+test5 <- load_GDP_data(test4)
+test6 <- load_registration_data(test5)
+test7 <- load_TWI_data(test6)
+
+bla <- load_datasets()
