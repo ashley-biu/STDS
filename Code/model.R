@@ -57,71 +57,60 @@ plot((research_data$fatality_number - E.fatality_number)/sqrt(E.fatality_number)
 plot(E.fatality_number, research_data$fatality_number)
 plot(log(E.fatality_number + 1), log(research_data$fatality_number + 1))
 
+
+###########################################################
+
+#looping over columns and adding dispersions to array "dispersions"
+dispersions <- c()
+counter <- 1
+for (i in colnames(research_data)) {
+    if (i != "time_frame" && i != "fatality_number") {
+        tmp <- as.formula(paste0("fatality_number~",i))
+        poisson <- glm(tmp,
+                family = poisson(),
+                data = research_data)
+
+                dispersion <- deviance(poisson) / df.residual(poisson)
+                dispersions[counter] <- dispersion
+        counter <- counter + 1
+    }
+}
+colnames(research_data)
+dispersions
+
+#creating poisson model with all explanatory variables to check for dispersion
+poisson_complete <- glm(fatality_number ~ CPI + employment_rate + youth_proportion + gdp_per_capita + vehicles_registered_in_millions + TWI_data,
+            family = poisson(),
+            data = research_data)
+
+deviance(poisson_complete) / df.residual(poisson_complete)
+
+#create poisson model with explanatory variables with low dispersion
+poisson_good_dispersion <- glm(fatality_number ~ CPI + youth_proportion + gdp_per_capita + vehicles_registered_in_millions,
+            family = poisson(),
+            data = research_data)
+deviance(poisson_good_dispersion) / df.residual(poisson_complete)
+#result = almost no difference between dispersions
+
+
 glm.negative_binomial <- glm.nb(fatality_number ~ CPI + employment_rate +
                 youth_proportion + gdp_per_capita +
                 vehicles_registered_in_millions + TWI_data,
                 data = research_data)
 
-###########################################################
-#garbage below
+summary(poisson_complete)
+summary(glm.negative_binomial)
+
+anova(poisson_complete, glm.negative_binomial, test = "Chisq")
 
 
-hist(research_data$fatality_number)
 
-poisson_CPI <- glm(fatality_number ~ CPI,
-            family = poisson(link = "log"),
-            data = research_data)
+#maybe compare residuals?????
+E.fatality_number_nb <- predict(glm.negative_binomial, type = "response")
 
-summary(poisson_CPI)
-
-#checking vor over/underdispersion >1 or < -1 is bad 
-deviance(poisson_CPI) / df.residual(poisson_CPI)
-
-poisson_employment <- glm(fatality_number ~ employment_rate,
-            family = poisson(link = "log"),
-            data = research_data)
-
-summary(poisson_employment)
-
-deviance(poisson_employment) / df.residual(poisson_employment)
-
-poisson_youth <- glm(fatality_number ~ youth_proportion,
-            family = poisson(link = "log"),
-            data = research_data)
-
-summary(poisson_youth)
-
-deviance(poisson_youth) / df.residual(poisson_youth)
-
-poisson_gdp <- glm(fatality_number ~ gdp_per_capita,
-            family = poisson(link = "log"),
-            data = research_data)
-
-summary(poisson_gdp)
-
-deviance(poisson_gdp) / df.residual(poisson_gdp)
-
-poisson_registered_vehicles <- glm(fatality_number ~ vehicles_registered_in_millions,
-            family = poisson(link = "log"),
-            data = research_data)
-
-summary(poisson_registered_vehicles)
-
-deviance(poisson_registered_vehicles) / df.residual(poisson_registered_vehicles)
-
-poisson_TWI <- glm(fatality_number ~ TWI_data,
-            family = poisson(link = "log"),
-            data = research_data)
-
-summary(poisson_TWI)
-
-deviance(poisson_TWI) / df.residual(poisson_TWI)
-
-research_data
-
-poisson_complete <- glm(fatality_number ~ CPI + employment_rate + youth_proportion + gdp_per_capita + vehicles_registered_in_millions + TWI_data,
-            family = poisson(link = "log"),
-            data = research_data)
-
-deviance(poisson_complete) / df.residual(poisson_complete)
-
+raw_residual <- research_data$fatality_number - E.fatality_number
+standardized_residual <- (research_data$fatality_number - E.fatality_number) / sqrt(E.fatality_number)
+raw_residual
+standardized_residual
+plot(raw_residual)
+plot(standardized_residual)
