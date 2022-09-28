@@ -275,37 +275,38 @@ research_data <- merge(research_data, registerd_vehicles_yearly)
 
 # TWI AUS DATA ---------------------------
 
+# load TWI first dataset containing years 1969 to 2009
+twi_exchange_data_1 <- read_csv("Data/twi_data_1969_2009.csv")
 
-twi_exchange_data <- read_csv("Data/twi_exchange_data.csv")
+# load TWI second dataset containing years 2010 to 2022
+twi_exchange_data_2 <- read_csv("Data/twi_data_2010_2022.csv")
 
-# select date rows and twi
-twi_data <- twi_exchange_data %>%
+# select date and twi colummns from TWI dataset 1
+twi_data_1 <- twi_exchange_data_1 %>%
   select(`Series ID`, FXRTWI)
 
-## rename twi columns for data hygiene
-twi_data = rename(twi_data, c(date = `Series ID`, twi = FXRTWI))
+# select date and twi colummns from TWI dataset 2
+twi_data_2 <- twi_exchange_data_2 %>%
+  select(`Series ID`, FXRTWI)
 
-# convert date column to date datatype
-twi_data$date <- as.Date(twi_data$date, format = "%d-%b-%y")
+# remove NA values from twi_data_1 (empty twi values from first 10 rows)
+twi_data_1 <- twi_data_1 %>%
+  drop_na()
 
-# create new column for month from date
-twi_data$month <- strftime(twi_data$date, "%m")
+# remove NA values from twi_data_2 (empty rows from end of dataset)
+twi_data_2 <- twi_data_2 %>%
+  drop_na()
 
-# create new column for year from date
-twi_data$year <- strftime(twi_data$date, "%Y")
+# add dates to 
+twi_data_1$`Series ID` <- as.Date(twi_data_1$`Series ID`, format = "%d-%b-%Y")
+twi_data_2$`Series ID` <- as.Date(twi_data_2$`Series ID`, format = "%d-%b-%y")
 
-# remove date column from twi_data
-twi_data <- twi_data %>%
-  select(-date)
+# Combine TWI datasets
+twi_data <- rbind(twi_data_1, twi_data_2)
 
-#find twi by year
-twi_yearly <- twi_data %>%
-  group_by(year) %>%
-  dplyr::summarize(TWI_data = mean(twi, na.rm = TRUE)) %>%
-  as.data.frame()
+# rename twi columns for data hygiene
+twi_data <- rename(twi_data, c(date = `Series ID`, twi = FXRTWI))
 
-# add annual twi to final analysis data
-research_data <- merge(research_data, twi_yearly)
 
 
 # RESEARCH DATA EXPLORATION ---------------------------

@@ -21,6 +21,9 @@ output:
     config:
       toc:
         collapse: section
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r Libraries}
@@ -56,52 +59,92 @@ knitr::opts_chunk$set(
 
 ```
 
-> FILE HAS NOT BEEN STYLED. LETS NOT STYLE IT UNTIL WE HAVE COMPLETED THE REPORT! \^\_\^ Also IDK if you guys want a TOC on the side. It can be removed.
+> FILE HAS NOT BEEN STYLED. LETS NOT STYLE IT UNTIL WE HAVE COMPLETED
+> THE REPORT! \^\_\^ Also IDK if you guys want a TOC on the side. It can
+> be removed.
 
-# Examining the Relationship Between Macro-Factors and Road Fatalities in New South Wales, Australia
+# Examining the Relationship Between Macro Factors and Road Fatalities in New South Wales, Australia
 
-Authors: Group Setteseven
-
-Ludovica Casolo (24649853), Esther Csoke (24542312), Jeremy George Herbert (14224289), Evelyn Olejniczak (24662847), José Quiroga Ocaña (14377168), Sebastian Felix Slowak (24653875), and Ashley Wang (14121545)
+Authors: Group Setteseven Ludovica Casolo (24649853), Esther Csoke
+(24542312), Jeremy George Herbert (14224289), Evelyn Olejniczak
+(24662847), José Quiroga Ocaña (14377168), Sebastian Felix Slowak
+(24653875), and Ashley Wang (14121545)
 
 ## Executive Summary
 
-TBA
+TBC
 
 ## Introduction
 
 ### Overview
 
-Australians have one of the world's highest motor vehicle ownership rates, with 20.1 million vehicles on Australian roads in 2021 (Australian Bureau of Statistics, 2021). Australians rely highly on vehicles as an essential mode of transportation for commuting, convenience, and leisure. However, each year, there are over 1,000 motor vehicle crash-related fatalities on Australian roads, and it is estimated that around 40,000 individuals are seriously injured (National Road Safety Strategy, 2021). Land transport accidents were the leading cause of death between 2018-2020 for children aged 1-14, and one of the top five leading causes of death for people aged 15-44 (Australian Institute of Health and Welfare, 2022).
+Australians have one of the world's highest motor vehicle ownership
+rates, with 20.1 million vehicles on Australian roads in 2021
+(Australian Bureau of Statistics, 2021). Australians rely highly on
+vehicles as an essential mode of transportation for commuting,
+convenience, and leisure. However, each year, there are over 1,000 motor
+vehicle crash-related fatalities on Australian roads, and it is
+estimated that around 40,000 individuals are seriously injured (National
+Road Safety Strategy, 2021).
 
-The injuries and trauma from road traffic accidents have many lingering effects on society, including human, social and economic costs and impacts on governments, families and health care systems (Kavalamthara et al., 2019). The Australian governments have committed to a vision of zero deaths and serious injuries by 2050 (Vision Zero) with the development of the National Road Safety Strategy (Office of Road Safety, 2021).
+The injuries and trauma from road traffic accidents have many lingering
+effects on society, including human, social and economic costs and
+impacts on governments, families and health care systems (Kavalamthara
+et al., 2019). The Australian governments have committed to a vision of
+zero deaths and serious injuries by 2050 (Vision Zero) with the
+development of the National Road Safety Strategy (Office of Road Safety,
+2021).
 
 ### Background Literature
 
-The vast majority of research conducted in Australia thus far has been focused on exploring the individual contributing risk factors of motor vehicle crash fatalities. Speed (Siskind et al., 2011), fatigue (Dawson et al., 2018), alcohol consumption (McDermott, 1977), and mechanisms to reduce fatalities through interventions have been investigated such as improved vehicle safety and road infrastructure design, monitoring and technology innovations, education, and social awareness programs.
+The vast majority of research conducted in Australia thus far has been
+focused on exploring the individual contributing risk factors of motor
+vehicle crash fatalities. Speed (Siskind et al., 2011), fatigue (Dawson
+et al., 2018), alcohol consumption (McDermott, 1977), and mechanisms to
+reduce fatalities through interventions have been investigated.
 
-Exogenous factors such as economic conditions have been suggested to affect individual opportunities and needs for vehicle transport, influencing the risk of an individual being involved in a fatal road traffic accident (Morrison & Albuquerque, 2021). Economic influences on the volume of road accidents have been examined primarily in international studies (see Wiklund et al. 2012; see also García-Ferrer et al. 2020). However, this area has not yet been thoroughly explored in Australia and is extremely limited.
+Exogenous factors such as economic conditions have been suggested to
+affect individual opportunities and needs for vehicle transport,
+influencing the risk of an individual being involved in a fatal road
+traffic accident (Morrison & Albuquerque, 2021). Economic influences on
+the volume of road accidents have been examined primarily in
+international studies (see Wiklund et al. 2012; see also García-Ferrer
+et al. 2020). However, this area has not yet been thoroughly explored in
+Australia and is extremely limited (see Burke and Teame, 2018; see also
+Nghiem et al. 2016).
 
-In 2018, Burke and Teame examined the influence of fuel prices on road deaths and concluded that fuel prices and unemployment rates made a "material contribution to the increase in the national road death toll". In 2016, Nghiem et al. examined the impact of policy interventions in Queensland, with consideration given to the macro factors of unemployment, registered vehicles, petrol consumption and vehicle kilometres travelled.
+In New Zealand, a study by Morrison and Albuquerque (2021) explored
+variables of New Zealand's economic activity, such as Gross Domestic
+Product (GDP), employment rate, petrol price, population age, and Trade
+Working Index (TWI). The study explored whether these factors led to
+fewer road vehicle accidents and built models that could forecast New
+Zealand's baseline road fatalities.
 
-In New Zealand, a study by Morrison and Albuquerque (2021) explored variables of New Zealand's economic activity, such as Gross Domestic Product (GDP), employment rate, petrol price, population age, and Trade Working Index (TWI). The study explored whether these factors led to fewer road vehicle accidents and built models that could forecast New Zealand's baseline road fatalities.
+## Stakeholders and Objectives
 
-### Stakeholders and Objectives
+Transport for NSW has developed its 2026 Road Safety Action Plan as part
+of Vision Zero. We propose to build upon Morrison and Albuquerque's 2021
+study by conducting an analysis of the relationship between a wide range
+of macro and economic variables, and motor vehicle fatalities in New
+South Wales, Australia.
 
-Transport for NSW has developed its 2026 Road Safety Action Plan as part of Vision Zero. We propose to build upon Morrison and Albuquerque's 2021 study by conducting an analysis of the relationship between a wide range of macro and economic variables, and motor vehicle fatalities in New South Wales, Australia.
+By determining the relationship and impact of exogenous variables, this
+information can be utilised to:
 
-By determining the relationship and impact of exogenous variables, this information can be utilised to:
+-   Acquire knowledge of the influential macro and economic conditions
+    to further inform and shape NSW government planning and policies in
+    reaching Vision Zero.
+-   Facilitate the development of an Australian model that can forecast
+    motor vehicle fatalities based on macro variables. Such a model
+    would provide a quantitative baseline of motor vehicle fatalities to
+    understand the impact of the Vision Zero interventions.
 
-1.  Acquire knowledge of the influential macro and economic conditions to further inform and shape NSW government planning and policies in reaching Vision Zero.
-2.  Facilitate the development of an Australian model that can forecast motor vehicle fatalities based on macro variables. Such a model would provide a quantitative baseline of motor vehicle fatalities to understand the impact of the Vision Zero interventions.
+To achieve our objectives, we are are proposing the following research
+question:
 
-To achieve our objectives, we are are proposing the following research questions:
+Can we quantify the relationship between NSW road fatalities and the
+following macro variables? 
 
-1.  Is there a relationship between NSW road fatalities and the following macro variables? What is the degree of influence, if any?
-
-```{=html}
-<!-- -->
-```
 a.  Gross Domestic Product (GDP)
 b.  Trade Weighted Index (TWI)
 c.  Consumer Price Index (CPI)
@@ -111,19 +154,9 @@ f.  Population and proportion of youth (under 25)
 g.  Registered vehicles
 h.  Vehicle kilometres travelled
 
-```{=html}
-<!-- -->
-```
-2.  Can a predictive model be developed based on the variables to quantify baseline NSW road fatalities?
+The injuries and trauma from road traffic accidents have many lingering effects on society, including human, social and economic costs and impacts on governments, families and health care systems (Kavalamthara et al., 2019). The Australian governments have committed to a vision of zero deaths and serious injuries by 2050 (Vision Zero) with the development of the National Road Safety Strategy (Office of Road Safety, 2021).
 
-### Challenges & Limitations
-
-We have identified a number of possible challenges and limitations that have the potential to hinder the progress or compromise the results:
-
--   Unavailable data sets. We were unable to source some data sets for other variables we wanted to consider, e.g. police force numbers, or were forced to find alternative data, which may limit the accuracy of our modelling.
--   Data set consistency. Inconsistent geographical and frequency granularity posed some issues. Data transformation and aggregation have addressed most of the concerns in this area.
--   Variables selected might not have high significance. However, a broad range of variables have been selected to ensure higher chances of significant variables. Further, the variables have been selected based on findings of previous accredited research.
--   Risk of multiplicity, collinearity, model overfitting, and Type 1 error. We are designing our methodology to be as robust as possible to lessen the risk of these issues.
+### Background Literature
 
 ## Methods
 
@@ -135,26 +168,54 @@ We have identified a number of possible challenges and limitations that have the
 
 ## References
 
--   Bruce, & Bruce, A. (2017). Practical Statistics for Data Scientists: 50 Essential Concepts (1st edition). O'Reilly Media, Incorporated.
+-   Australian Road Deaths Database (ARDD) \| Datasets \|
+    data.gov.au---Beta. (n.d.). [Data Set]. Retrieved August 28, 2022,
+    from
+    <https://data.gov.au/dataset/ds-dga-5b530fb8-526e-4fbf-b0f6-aa24e84e4277/details?q=ardd>
 
--   Burke, P & Teame, A. (2018). Fuel Prices and Road Deaths in Australia. Economic Papers: A journal of applied economics and policy. 37. <https://doi.org/10.1111/1759-3441.12207>
+-   Bruce, & Bruce, A. (2017). Practical Statistics for Data Scientists:
+    50 Essential Concepts (1st edition). O'Reilly Media, Incorporated.
+    Burke, P & Teame, A. (2018). Fuel Prices and Road Deaths in
+    Australia. Economic Papers: A journal of applied economics and
+    policy. 37. <https://doi.org/10.1111/1759-3441.12207>
 
--   Chen, Z., Gao, Z., Yu, R., Wang, M., & Sun, P. (2016). Macro-level accident fatality prediction using a combined model based on ARIMA and multivariable linear regression. 2016 International Conference on Progress in Informatics and Computing (PIC), 133--137. <https://doi.org/10.1109/PIC.2016.7949481>
+-   Chen, Z., Gao, Z., Yu, R., Wang, M., & Sun, P. (2016). Macro-level
+    accident fatality prediction using a combined model based on ARIMA
+    and multivariable linear regression. 2016 International Conference
+    on Progress in Informatics and Computing (PIC), 133--137.
+    <https://doi.org/10.1109/PIC.2016.7949481>
 
--   Dawson, D., Reynolds, A. C., Van Dongen, H. P., & Thomas, M. J. (2018). Determining the likelihood that fatigue was present in a road accident: a theoretical review and suggested accident taxonomy. Sleep Medicine Review, 42, 202-210. <https://doi.org/10.1016/j.smrv.2018.08.006>
+-   Dawson, D., Reynolds, A. C., Van Dongen, H. P., & Thomas, M. J.
+    (2018). Determining the likelihood that fatigue was present in a
+    road accident: a theoretical review and suggested accident taxonomy.
+    Sleep Medicine Review, 42, 202-210.
+    <https://doi.org/10.1016/j.smrv.2018.08.006>
 
--   García-Ferrer, A., Bujosa, M., de Juan, A., & Sánchez-Mangas, R.(2020). Revisiting the relationship between traffic accidents, real economic activity and other factors in Spain. Accident Analysis & Prevention, 105549, <https://doi.org/10.1016/j.aap.2020.105549>
+-   García-Ferrer, A., Bujosa, M., de Juan, A., & Sánchez-Mangas,
+    R.(2020). Revisiting the relationship between traffic accidents,
+    real economic activity and other factors in Spain. Accident Analysis
+    & Prevention,105549, <https://doi.org/10.1016/j.aap.2020.105549>
+    Kavalamthara, P. J., Cyril, S., Liu, Y., & Saverimuttu, V. (2019).
+    Road Traffic Accidents: Reviewing the Efficacy of Road Safety
+    Measures in New South Wales, Australia. The Built Environment, 29.
+    <https://doi.org/10.2495/DMAN190031>
 
--   Kavalamthara, P. J., Cyril, S., Liu, Y., & Saverimuttu, V. (2019). Road Traffic Accidents: Reviewing the Efficacy of Road Safety Measures in New South Wales, Australia. The Built Environment, 29. <https://doi.org/10.2495/DMAN190031>
+-   Morrison, C., & Albuquerque, E. (2021). Modelling New Zealand road
+    deaths. Journal of Road Safety, 32(2), 4-15.
+    <https://doi.org/10.33492/JRS-D-19-00246> Nghiem, S.,Commandeur, J.,
+    & Connelly, L. (2016). Determinants of road traffic safety: New
+    evidence from Australia using state-space analysis. Accident
+    Analysis & Prevention, 94, 65-72.
+    <https://doi.org/10.1016/j.aap.2016.05.012>
 
--   Morrison, C., & Albuquerque, E. (2021). Modelling New Zealand road deaths. Journal of Road Safety, 32(2), 4-15. <https://doi.org/10.33492/JRS-D-19-00246>
+-   Siskind, V., Steinhardt, D., Sheehan, M., O'Connor, T., & Hanks, H.
+    (2011). Risk factors for fatal crashes in rural Australia. Accident
+    Analysis & Prevention, 43(3), 1082-1088.
+    <https://doi.org/10.1016/j.aap.2010.12.016> Transport for NSW.
+    (2022). 2026 Road Safety Action Plan.
+    <https://towardszero.nsw.gov.au/sites/default/files/2022-05/TNSW9659%20Road-Safety-Action-Plan-2026-ACC_1_0.pdf>
 
--   Nghiem, S.,Commandeur, J., & Connelly, L. (2016). Determinants of road traffic safety: New evidence from Australia using state-space analysis. Accident Analysis & Prevention, 94, 65-72. <https://doi.org/10.1016/j.aap.2016.05.012>
-
--   Office of Road Safety. (2021). National Road Safety Strategy. Retrieved August 26, 2022, from <https://www.roadsafety.gov.au/nrss>
-
--   Siskind, V., Steinhardt, D., Sheehan, M., O'Connor, T., & Hanks, H. (2011). Risk factors for fatal crashes in rural Australia. Accident Analysis & Prevention, 43(3), 1082-1088. <https://doi.org/10.1016/j.aap.2010.12.016>
-
--   Transport for NSW. (2022). 2026 Road Safety Action Plan. <https://towardszero.nsw.gov.au/sites/default/files/2022-05/TNSW9659%20Road-Safe> ty-Action-Plan-2026-ACC_1\_0.pdf
-
--   Wiklund, M., Simonsson, L., & Forsman, Å. (2012). Traffic safety and economic fluctuation: long-term and short-term analyses and a literature survey. VTI rapport 704A. Retrieved from <http://urn.kb.se/resolve?urn=urn:nbn:se:vti:diva-297>
+-   Wiklund, M., Simonsson, L., & Forsman, Å. (2012). Traffic safety and
+    economic fluctuation : long-term and short-term analyses and a
+    literature survey. VTI rapport 704A. Retrieved from
+    <http://urn.kb.se/resolve?urn=urn:nbn:se:vti:diva-297>
