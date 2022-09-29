@@ -1,3 +1,10 @@
+##### GUIDE #####
+# Before running, go to the file "data loader and run the whole scipt"
+# Then run this one
+# NOTE: make sure you set your current directory to the folder STDS_AT2_2022
+
+
+
 # import libraries
 library(pacman)
 
@@ -802,6 +809,21 @@ list(residual.deviance           = deviance(diesel.nb.mod),
 par(mfrow=c(2,2))
 leuk.diag <- glm.diag(diesel.nb.mod)
 glm.diag.plots(diesel.nb.mod, leuk.diag)
+
+
+
+
+
+
+######### REFACTOR CODE ###########
+
+
+# Loop through variables and perform poisson
+# Create df with results
+
+
+
+
 
 
 
