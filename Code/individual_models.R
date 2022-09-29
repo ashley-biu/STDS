@@ -298,6 +298,66 @@ leuk.diag <- glm.diag(youth.nb.mod)
 glm.diag.plots(youth.nb.mod, leuk.diag)
 
 
+####################################
+
+
+#####################################
+# POISSON MODEL: FATALITY_NUMBER ~ GDP PER CAP)
+####################################
+
+#  Poisson Regression 
+gdp.pos.mod <-  glm(fatality_number ~ gdp_per_capita, data=research_data, family="poisson")
+
+
+# Display Summary Statistics 
+summary(gdp.pos.mod)
+
+
+# Display Coeeficients
+summary(gdp.pos.mod)$coefficients
+
+
+# Confidence Intervals 
+confint(gdp.pos.mod)
+
+
+# Dispersion Test 
+dispersiontest(gdp.pos.mod)
+
+
+
+#####################################
+# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ GDP)
+####################################
+
+
+# negative bimomial model
+gdp.nb.mod <- glm.nb(fatality_number ~ gdp_per_capita,
+                     data = research_data)
+
+
+# Summary of negative binomial
+summary(gdp.nb.mod)
+
+
+# Confidence Intervals 
+confint(gdp.nb.mod)
+
+
+# Goodness of Fit Test (deviance) for negative binomial model
+list(residual.deviance           = deviance(gdp.nb.mod),
+     residual.degrees.of.freedom = df.residual(gdp.nb.mod),
+     chisq.p.value               = pchisq(deviance(gdp.nb.mod), df.residual(gdp.nb.mod), lower = F))
+
+
+# plot diagnostics
+par(mfrow=c(2,2))
+leuk.diag <- glm.diag(gdp.nb.mod)
+glm.diag.plots(gdp.nb.mod, leuk.diag)
+
+
+
+####################################
 
 
 
