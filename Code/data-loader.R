@@ -61,8 +61,7 @@ load_crash_data <- function(research_data){
     "fatality_number"
   
   fatalities_by_quarter_and_year$time_frame <- paste(fatalities_by_quarter_and_year$year,fatalities_by_quarter_and_year$quarter, sep = "-")
-  fatalities_by_quarter_and_year <- select(fatalities_by_quarter_and_year[, c("time_frame", "fatality_number", "year", "quarter")],-3:-4)
-  
+ 
   # create new DF and add yearly fatalities
   research_data <- fatalities_by_quarter_and_year
   
@@ -644,7 +643,7 @@ load_petrol_price_data <- function(research_data) {
   research_data <- merge(research_data, petrol_diesel_prices_quarterly)
   
   return(research_data)
-  
+
 }
 
 
