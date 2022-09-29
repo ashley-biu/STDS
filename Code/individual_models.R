@@ -18,8 +18,14 @@ pacman::p_load(
   "boot"
 )
 
+
 # import data
 research_data <- load_datasets()
+
+
+
+
+########### CPI
 
 
 #####################################
@@ -75,11 +81,15 @@ leuk.diag <- glm.diag(cpi.nb.mod)
 glm.diag.plots(cpi.nb.mod, leuk.diag)
 
 
-######################################################
+
+
+
+########### EMPLOYMENT RATE
+
 
 
 #####################################
-# POISSON MODEL: FATALITY_NUMBER ~ Employment Rate)
+# POISSON MODEL: FATALITY_NUMBER ~ Employment Rate
 ####################################
 
 #  Poisson Regression 
@@ -129,10 +139,9 @@ leuk.diag <- glm.diag(employment.nb.mod)
 glm.diag.plots(employment.nb.mod, leuk.diag)
 
 
-################################################################################
 
 
-
+########### UNEMPLOYMENT
 
 
 #####################################
@@ -157,7 +166,7 @@ dispersiontest(unemployment.pos.mod)
 
 
 #####################################
-# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ unemployment RATE)
+# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ UNEMPLOYMENT RATE)
 ####################################
 
 # model negative bimomial model
@@ -186,7 +195,9 @@ glm.diag.plots(unemployment.nb.mod, leuk.diag)
 
 
 
-####################################
+
+
+########### TOTAL POPULATION
 
 #####################################
 # POISSON MODEL: FATALITY_NUMBER ~ TOTAL POPULATION NUMBER)
@@ -240,6 +251,10 @@ list(residual.deviance           = deviance(population.nb.mod),
 par(mfrow=c(2,2))
 leuk.diag <- glm.diag(population.nb.mod)
 glm.diag.plots(population.nb.mod, leuk.diag)
+
+
+
+########### YOUTH PROPORTION
 
 
 
@@ -298,7 +313,9 @@ leuk.diag <- glm.diag(youth.nb.mod)
 glm.diag.plots(youth.nb.mod, leuk.diag)
 
 
-####################################
+
+########### GDP
+
 
 
 #####################################
@@ -357,7 +374,8 @@ glm.diag.plots(gdp.nb.mod, leuk.diag)
 
 
 
-####################################
+########### LIGHT VEHICLES
+
 
 
 
@@ -664,6 +682,126 @@ leuk.diag <- glm.diag(twi.nb.mod)
 glm.diag.plots(twi.nb.mod, leuk.diag)
 
 
+
+
+########### PETROL
+
+
+#####################################
+# POISSON MODEL: FATALITY_NUMBER ~ PETROL PRICE)
+####################################
+
+#  Poisson Regression 
+petrol.pos.mod <-  glm(fatality_number ~ petrol_price, data=research_data, family="poisson")
+
+
+# Display Summary Statistics 
+summary(petrol.pos.mod)
+
+
+# Display Coeeficients
+summary(petrol.pos.mod)$coefficients
+
+
+# Confidence Intervals 
+confint(petrol.pos.mod)
+
+
+# Dispersion Test 
+dispersiontest(petrol.pos.mod)
+
+
+
+#####################################
+# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ PETROL)
+####################################
+
+
+# negative bimomial model
+petrol.nb.mod <- glm.nb(fatality_number ~ petrol_price,
+                     data = research_data)
+
+
+# Summary of negative binomial
+summary(petrol.nb.mod)
+
+
+# Confidence Intervals 
+confint(petrol.nb.mod)
+
+
+# Goodness of Fit Test (deviance) for negative binomial model
+list(residual.deviance           = deviance(petrol.nb.mod),
+     residual.degrees.of.freedom = df.residual(petrol.nb.mod),
+     chisq.p.value               = pchisq(deviance(petrol.nb.mod), df.residual(petrol.nb.mod), lower = F))
+
+
+# plot diagnostics
+par(mfrow=c(2,2))
+leuk.diag <- glm.diag(petrol.nb.mod)
+glm.diag.plots(petrol.nb.mod, leuk.diag)
+
+
+
+
+
+########### DIESEL
+
+
+
+#####################################
+# POISSON MODEL: FATALITY_NUMBER ~ DIESEL PRICE)
+####################################
+
+#  Poisson Regression 
+diesel.pos.mod <-  glm(fatality_number ~ diesel_price, data=research_data, family="poisson")
+
+
+# Display Summary Statistics 
+summary(diesel.pos.mod)
+
+
+# Display Coeeficients
+summary(diesel.pos.mod)$coefficients
+
+
+# Confidence Intervals 
+confint(diesel.pos.mod)
+
+
+# Dispersion Test 
+dispersiontest(diesel.pos.mod)
+
+
+
+#####################################
+# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ DIESEL)
+####################################
+
+
+# negative bimomial model
+diesel.nb.mod <- glm.nb(fatality_number ~ diesel_price,
+                        data = research_data)
+
+
+# Summary of negative binomial
+summary(diesel.nb.mod)
+
+
+# Confidence Intervals 
+confint(diesel.nb.mod)
+
+
+# Goodness of Fit Test (deviance) for negative binomial model
+list(residual.deviance           = deviance(diesel.nb.mod),
+     residual.degrees.of.freedom = df.residual(diesel.nb.mod),
+     chisq.p.value               = pchisq(deviance(diesel.nb.mod), df.residual(diesel.nb.mod), lower = F))
+
+
+# plot diagnostics
+par(mfrow=c(2,2))
+leuk.diag <- glm.diag(diesel.nb.mod)
+glm.diag.plots(diesel.nb.mod, leuk.diag)
 
 
 
