@@ -243,4 +243,62 @@ glm.diag.plots(population.nb.mod, leuk.diag)
 
 
 
+#####################################
+# POISSON MODEL: FATALITY_NUMBER ~ YOUTH PROPORTION)
+####################################
+
+#  Poisson Regression 
+youth.pos.mod <-  glm(fatality_number ~ youth_proportion, data=research_data, family="poisson")
+
+
+# Display Summary Statistics 
+summary(youth.pos.mod)
+
+
+# Display Coeeficients
+summary(youth.pos.mod)$coefficients
+
+
+# Confidence Intervals 
+confint(youth.pos.mod)
+
+
+# Dispersion Test 
+dispersiontest(youth.pos.mod)
+
+
+
+#####################################
+# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ YOUTH PROPORTION)
+####################################
+
+
+# negative bimomial model
+youth.nb.mod <- glm.nb(fatality_number ~ youth_proportion,
+                       data = research_data)
+
+
+# Summary of negative binomial
+summary(youth.nb.mod)
+
+
+# Confidence Intervals 
+confint(youth.nb.mod)
+
+
+# Goodness of Fit Test (deviance) for negative binomial model
+list(residual.deviance           = deviance(youth.nb.mod),
+     residual.degrees.of.freedom = df.residual(youth.nb.mod),
+     chisq.p.value               = pchisq(deviance(youth.nb.mod), df.residual(youth.nb.mod), lower = F))
+
+
+# plot diagnostics
+par(mfrow=c(2,2))
+leuk.diag <- glm.diag(youth.nb.mod)
+glm.diag.plots(youth.nb.mod, leuk.diag)
+
+
+
+
+
 
