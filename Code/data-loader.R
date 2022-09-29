@@ -347,8 +347,7 @@ load_registration_data <- function(research_data) {
   
   names(nsw_vehicles_heavy) <- c('total', 'date', 'month', 'year') 
   
-  
-  # # update date grouping to quarters
+  # update date grouping to quarters
   nsw_vehicles_motorcycles_scooters <- nsw_vehicles_motorcycles_scooters %>% mutate(time_frame = case_when(
     between(month, 1, 3) ~ paste(year,"-Q1", sep = ""),
     between(month, 4, 6) ~ paste(year,"-Q2", sep = ""),
@@ -395,10 +394,11 @@ load_registration_data <- function(research_data) {
     registered_vehicles_quarterly_light$time_frame, 
     registered_vehicles_quarterly_light$lightvehicles_registered_in_millions,
     registered_vehicles_quarterly_heavy$heavyvehicles_registered_in_millions,
-    registered_vehicles_quarterly_motorcycles$motorcycles_registered_in_millions
+    registered_vehicles_quarterly_motorcycles$motorcycles_registered_in_millions,
+    registered_vehicles_quarterly_light$lightvehicles_registered_in_millions + registered_vehicles_quarterly_heavy$heavyvehicles_registered_in_millions + registered_vehicles_quarterly_motorcycles$motorcycles_registered_in_millions
   )
   
-  names(registered_vehicles_quarterly) <- c('time_frame', 'registered_light_vehicles', 'registered_heavy_vehicles', 'registered_motorcycles') 
+  names(registered_vehicles_quarterly) <- c('time_frame', 'registered_light_vehicles', 'registered_heavy_vehicles', 'registered_motorcycles', 'vehicles_registered_in_millions') 
   
   # add registered vehicles in millions to final analysis data
   research_data <- merge(research_data, registered_vehicles_quarterly,  by = "time_frame")
