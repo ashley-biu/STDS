@@ -89,7 +89,7 @@ load_petrol_data <- function(research_data) {
   
   # Select Petrol prices for NSW
   nsw_petrol <- petrol %>%
-    select("year", "NSW")
+    dplyr::select("year", "NSW")
   
   # Rename NSW column to avg_petrol_price
   names(nsw_petrol)[2] <- c("avg_petrol_price")
@@ -418,11 +418,11 @@ load_TWI_data <- function(research_data) {
   
   # select date and twi colummns from TWI dataset 1
   twi_data_1 <- twi_exchange_data_1 %>%
-    select(`Series ID`, FXRTWI)
+    dplyr::select(`Series ID`, FXRTWI)
   
   # select date and twi colummns from TWI dataset 2
   twi_data_2 <- twi_exchange_data_2 %>%
-    select(`Series ID`, FXRTWI)
+    dplyr::select(`Series ID`, FXRTWI)
   
   # remove NA values from twi_data_1 (empty twi values from first 10 rows)
   twi_data_1 <- twi_data_1 %>%
@@ -492,7 +492,7 @@ load_tgp_data <- function(research_data) {
   
   # select TGP for Sydney
   sydney_tgp <- sydney_tgp %>%
-    select("sydney", "date", "month", "year" )
+    dplyr::select("sydney", "date", "month", "year" )
   
   # update date grouping to quarters
   sydney_tgp <- sydney_tgp %>% mutate(time_frame = case_when(
@@ -540,7 +540,7 @@ load_brent_oil_data <- function(research_data) {
   
   # select columns needed
   brent_oil <- brent_oil %>%
-    select("price", "date", "month", "year" )
+    dplyr::select("price", "date", "month", "year" )
   
   # update date grouping to quarters
   brent_oil <- brent_oil %>% mutate(time_frame = case_when(
@@ -600,9 +600,9 @@ load_petrol_price_data <- function(research_data) {
   
   # select columns
   petrol_prices <- petrol_prices %>%
-    select("price", "date", "month", "year" )
+    dplyr::select("price", "date", "month", "year" )
   diesel_prices <- diesel_prices %>%
-    select("price", "date", "month", "year" )
+    dplyr::select("price", "date", "month", "year" )
   
   # update date grouping to quarters
   petrol_prices <- petrol_prices %>% mutate(time_frame = case_when(
