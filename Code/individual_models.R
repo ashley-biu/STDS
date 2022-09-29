@@ -419,6 +419,64 @@ glm.diag.plots(light.vehicles.nb.mod, leuk.diag)
 
 
 
+########### HEAVY VECHICLES
+
+
+
+#####################################
+# POISSON MODEL: FATALITY_NUMBER ~ HEAVY  VECHICLES)
+####################################
+
+#  Poisson Regression 
+heavy.vehicles.pos.mod <-  glm(fatality_number ~ registered_heavy_vehicles, data=research_data, family="poisson")
+
+
+# Display Summary Statistics 
+summary(heavy.vehicles.pos.mod)
+
+
+# Display Coeeficients
+summary(heavy.vehicles.pos.mod)$coefficients
+
+
+# Confidence Intervals 
+confint(heavy.vehicles.pos.mod)
+
+
+# Dispersion Test 
+dispersiontest(heavy.vehicles.pos.mod)
+
+
+
+#####################################
+# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ REGISTERED HEAVY VECHICLES)
+####################################
+
+
+# negative bimomial model
+heavy.vehicles.nb.mod <- glm.nb(fatality_number ~ registered_heavy_vehicles,
+                                data = research_data)
+
+
+# Summary of negative binomial
+summary(heavy.vehicles.nb.mod)
+
+
+# Confidence Intervals 
+confint(heavy.vehicles.nb.mod)
+
+
+# Goodness of Fit Test (deviance) for negative binomial model
+list(residual.deviance           = deviance(heavy.vehicles.nb.mod),
+     residual.degrees.of.freedom = df.residual(heavy.vehicles.nb.mod),
+     chisq.p.value               = pchisq(deviance(heavy.vehicles.nb.mod), df.residual(heavy.vehicles.nb.mod), lower = F))
+
+
+# plot diagnostics
+par(mfrow=c(2,2))
+leuk.diag <- glm.diag(heavy.vehicles.nb.mod)
+glm.diag.plots(heavy.vehicles.nb.mod, leuk.diag)
+
 
 
 
