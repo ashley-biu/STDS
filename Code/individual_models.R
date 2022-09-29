@@ -26,12 +26,12 @@ research_data <- load_datasets()
 # POISSON MODEL: FATALITY_NUMBER ~ CPI)
 ####################################
 
-#  Poisson Regression (Fatality ~ CPI) Model
+#  Poisson Regression 
 cpi.pos.mod <-  glm(fatality_number ~ CPI, data=research_data, family="poisson")
 
 # Display Summary Statistics 
 summary(cpi.pos.mod)
-# AIC = 629.37
+
 
 # Display Coeeficients
 summary(cpi.pos.mod)$coefficients
@@ -55,10 +55,9 @@ cpi.nb.mod <- glm.nb(fatality_number ~ CPI,
 
 # Summary of negative binomial (Fatality ~ CPI)
 summary(cpi.nb.mod)
-# AIC = 625.49 - Negative Binomial has a lower AIC
 
 
-# Confidence Intervals for fatality ~ CPI
+# Confidence Intervals
 confint(cpi.nb.mod)
 
 # Goodness of Fit Test (deviance) for negative binomial model
@@ -70,19 +69,66 @@ list(residual.deviance           = deviance(cpi.nb.mod),
 # chi value of 0.34, therefore it's a good fit. (still waiting for Kyle to confirm to do this - sent him an email)
 
 
-#####################################
-# DIAGNOSTICS: NEGATIVE BINOMIAL FATALITY_NUMBER ~ CPI)
-####################################
-
 # plot diagnostics
 par(mfrow=c(2,2))
 leuk.diag <- glm.diag(cpi.nb.mod)
 glm.diag.plots(cpi.nb.mod, leuk.diag)
 
 
+######################################################
+
+
+#####################################
+# POISSON MODEL: FATALITY_NUMBER ~ Employment Rate)
+####################################
+
+#  Poisson Regression 
+employment.pos.mod <-  glm(fatality_number ~ employment_rate, data=research_data, family="poisson")
+
+# Display Summary Statistics 
+summary(employment.pos.mod)
+# AIC = 629.37
+
+# Display Coeeficients
+summary(employment.pos.mod)$coefficients
+
+# Confidence Intervals for fatality ~  Employment Rate
+confint(employment.pos.mod)
+
+# Dispersion Test for Fatality ~  Employment Rate
+dispersiontest(employment.pos.mod)
 
 
 
+#####################################
+# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ EMPLOYMENT RATE)
+####################################
 
+# model negative bimomial model
+employment.nb.mod <- glm.nb(fatality_number ~ employment_rate,
+                            data = research_data)
+
+
+# Summary of negative binomial
+summary(employment.nb.mod)
+
+
+# Confidence Intervals 
+confint(employment.nb.mod)
+
+
+# Goodness of Fit Test (deviance) for negative binomial model
+list(residual.deviance           = deviance(employment.nb.mod),
+     residual.degrees.of.freedom = df.residual(employment.nb.mod),
+     chisq.p.value               = pchisq(deviance(employment.nb.mod), df.residual(employment.nb.mod), lower = F))
+
+
+# plot diagnostics
+par(mfrow=c(2,2))
+leuk.diag <- glm.diag(employment.nb.mod)
+glm.diag.plots(employment.nb.mod, leuk.diag)
+
+
+################################################################################
 
 
