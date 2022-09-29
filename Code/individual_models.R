@@ -480,5 +480,192 @@ glm.diag.plots(heavy.vehicles.nb.mod, leuk.diag)
 
 
 
+########### MOTORCYCLES
+
+
+
+#####################################
+# POISSON MODEL: FATALITY_NUMBER ~ MOTORCYCLES)
+####################################
+
+#  Poisson Regression 
+motorcycle.pos.mod <-  glm(fatality_number ~ registered_motorcycles, data=research_data, family="poisson")
+
+
+# Display Summary Statistics 
+summary(motorcycle.pos.mod)
+
+
+# Display Coeeficients
+summary(motorcycle.pos.mod)$coefficients
+
+
+# Confidence Intervals 
+confint(motorcycle.pos.mod)
+
+
+# Dispersion Test 
+dispersiontest(motorcycle.pos.mod)
+
+
+
+#####################################
+# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ MOTORCYCLES)
+####################################
+
+
+# negative bimomial model
+motorcycles.nb.mod <- glm.nb(fatality_number ~ registered_motorcycles,
+                                data = research_data)
+
+
+# Summary of negative binomial
+summary(motorcycles.nb.mod)
+
+
+# Confidence Intervals 
+confint(motorcycles.nb.mod)
+
+
+# Goodness of Fit Test (deviance) for negative binomial model
+list(residual.deviance           = deviance(motorcycles.nb.mod),
+     residual.degrees.of.freedom = df.residual(motorcycles.nb.mod),
+     chisq.p.value               = pchisq(deviance(motorcycles.nb.mod), df.residual(motorcycles.nb.mod), lower = F))
+
+
+# plot diagnostics
+par(mfrow=c(2,2))
+leuk.diag <- glm.diag(motorcycles.nb.mod)
+glm.diag.plots(motorcycles.nb.mod, leuk.diag)
+
+
+
+
+
+########### VEHICLES IN MILLIONS
+
+
+
+#####################################
+# POISSON MODEL: FATALITY_NUMBER ~ VEHICLES IN MILS)
+####################################
+
+#  Poisson Regression 
+vehicles.mil.pos.mod <-  glm(fatality_number ~ vehicles_registered_in_millions, data=research_data, family="poisson")
+
+
+# Display Summary Statistics 
+summary(vehicles.mil.pos.mod)
+
+
+# Display Coeeficients
+summary(vehicles.mil.pos.mod)$coefficients
+
+
+# Confidence Intervals 
+confint(vehicles.mil.pos.mod)
+
+
+# Dispersion Test 
+dispersiontest(vehicles.mil.pos.mod)
+
+
+
+#####################################
+# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ VEHICLES IN MIL)
+####################################
+
+
+# negative bimomial model
+vehicles.mil.nb.mod <- glm.nb(fatality_number ~ vehicles_registered_in_millions,
+                             data = research_data)
+
+
+# Summary of negative binomial
+summary(vehicles.mil.nb.mod)
+
+
+# Confidence Intervals 
+confint(vehicles.mil.nb.mod)
+
+
+# Goodness of Fit Test (deviance) for negative binomial model
+list(residual.deviance           = deviance(vehicles.mil.nb.mod),
+     residual.degrees.of.freedom = df.residual(vehicles.mil.nb.mod),
+     chisq.p.value               = pchisq(deviance(vehicles.mil.nb.mod), df.residual(vehicles.mil.nb.mod), lower = F))
+
+
+# plot diagnostics
+par(mfrow=c(2,2))
+leuk.diag <- glm.diag(vehicles.mil.nb.mod)
+glm.diag.plots(vehicles.mil.nb.mod, leuk.diag)
+
+
+
+
+
+
+########### TWI
+
+
+
+#####################################
+# POISSON MODEL: FATALITY_NUMBER ~ TWI)
+####################################
+
+#  Poisson Regression 
+twi.pos.mod <-  glm(fatality_number ~ TWI_data, data=research_data, family="poisson")
+
+
+# Display Summary Statistics 
+summary(twi.pos.mod)
+
+
+# Display Coeeficients
+summary(twi.pos.mod)$coefficients
+
+
+# Confidence Intervals 
+confint(twi.pos.mod)
+
+
+# Dispersion Test 
+dispersiontest(twi.pos.mod)
+
+
+
+#####################################
+# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ TWI)
+####################################
+
+
+# negative bimomial model
+twi.nb.mod <- glm.nb(fatality_number ~ TWI_data,
+                              data = research_data)
+
+
+# Summary of negative binomial
+summary(twi.nb.mod)
+
+
+# Confidence Intervals 
+confint(twi.nb.mod)
+
+
+# Goodness of Fit Test (deviance) for negative binomial model
+list(residual.deviance           = deviance(twi.nb.mod),
+     residual.degrees.of.freedom = df.residual(twi.nb.mod),
+     chisq.p.value               = pchisq(deviance(twi.nb.mod), df.residual(twi.nb.mod), lower = F))
+
+
+# plot diagnostics
+par(mfrow=c(2,2))
+leuk.diag <- glm.diag(twi.nb.mod)
+glm.diag.plots(twi.nb.mod, leuk.diag)
+
+
+
+
+
 
 
