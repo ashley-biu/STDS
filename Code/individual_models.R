@@ -188,5 +188,59 @@ glm.diag.plots(unemployment.nb.mod, leuk.diag)
 
 ####################################
 
+#####################################
+# POISSON MODEL: FATALITY_NUMBER ~ TOTAL POPULATION NUMBER)
+####################################
+
+#  Poisson Regression 
+population.pos.mod <-  glm(fatality_number ~ tot_pop_num, data=research_data, family="poisson")
+
+
+# Display Summary Statistics 
+summary(population.pos.mod)
+
+
+# Display Coeeficients
+summary(population.pos.mod)$coefficients
+
+
+# Confidence Intervals 
+confint(population.pos.mod)
+
+
+# Dispersion Test 
+dispersiontest(population.pos.mod)
+
+
+
+#####################################
+# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ TOTAL POPULATION NUMBER)
+####################################
+
+# negative bimomial model
+population.nb.mod <- glm.nb(fatality_number ~ tot_pop_num,
+                            data = research_data)
+
+
+# Summary of negative binomial
+summary(population.nb.mod)
+
+
+# Confidence Intervals 
+confint(population.nb.mod)
+
+
+# Goodness of Fit Test (deviance) for negative binomial model
+list(residual.deviance           = deviance(population.nb.mod),
+     residual.degrees.of.freedom = df.residual(population.nb.mod),
+     chisq.p.value               = pchisq(deviance(population.nb.mod), df.residual(population.nb.mod), lower = F))
+
+
+# plot diagnostics
+par(mfrow=c(2,2))
+leuk.diag <- glm.diag(population.nb.mod)
+glm.diag.plots(population.nb.mod, leuk.diag)
+
+
 
 
