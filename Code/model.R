@@ -10,11 +10,13 @@ install_github("trinker/pacman")
 
 # load libraries
 library(pacman)
+library(MASS)
+library(tidyverse)
 
 # load in packages
 pacman::p_load("modelr", "AER", "MASS")
 
-# laod dataset
+# load dataset
 research_data <- load_datasets()
 
 splits <- crossv_kfold(research_data, k = 3)
