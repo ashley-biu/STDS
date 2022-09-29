@@ -132,3 +132,61 @@ glm.diag.plots(employment.nb.mod, leuk.diag)
 ################################################################################
 
 
+
+
+
+#####################################
+# POISSON MODEL: FATALITY_NUMBER ~ UNEMPLOYMENT)
+####################################
+
+#  Poisson Regression (Fatality ~ CPI) Model
+unemployment.pos.mod <-  glm(fatality_number ~ unemployment_rate, data=research_data, family="poisson")
+
+# Display Summary Statistics 
+summary(unemployment.pos.mod)
+
+# Display Coeeficients
+summary(unemployment.pos.mod)$coefficients
+
+# Confidence Intervals for fatality ~ unemployment
+confint(unemployment.pos.mod)
+
+# Dispersion Test
+dispersiontest(unemployment.pos.mod)
+
+
+
+#####################################
+# NEGATIVE BINOMIAL MODEL: FATALITY_NUMBER ~ unemployment RATE)
+####################################
+
+# model negative bimomial model
+unemployment.nb.mod <- glm.nb(fatality_number ~ unemployment_rate,
+                              data = research_data)
+
+
+# Summary of negative binomial
+summary(unemployment.nb.mod)
+
+
+# Confidence Intervals 
+confint(unemployment.nb.mod)
+
+
+# Goodness of Fit Test (deviance) for negative binomial model
+list(residual.deviance           = deviance(unemployment.nb.mod),
+     residual.degrees.of.freedom = df.residual(unemployment.nb.mod),
+     chisq.p.value               = pchisq(deviance(unemployment.nb.mod), df.residual(unemployment.nb.mod), lower = F))
+
+
+# plot diagnostics
+par(mfrow=c(2,2))
+leuk.diag <- glm.diag(unemployment.nb.mod)
+glm.diag.plots(unemployment.nb.mod, leuk.diag)
+
+
+
+####################################
+
+
+
