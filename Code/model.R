@@ -10,14 +10,21 @@ install_github("trinker/pacman")
 
 # load libraries
 library(pacman)
+library(MASS)
+library(tidyverse)
 
 # load in packages
 pacman::p_load("modelr", "AER", "MASS")
 
-# laod dataset
+# load dataset
 research_data <- load_datasets()
 
 splits <- crossv_kfold(research_data, k = 3)
+
+# allocate holdout and main data
+research_data_all <- research_data
+research_data <- dplyr::filter(research_data_all, !grepl("2021|2020|2019|2018|2017", time_frame))
+research_data_hold <- dplyr::filter(research_data_all, grepl("2021|2020|2019|2018|2017", time_frame))
 
 research_data
 
