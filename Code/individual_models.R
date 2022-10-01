@@ -22,7 +22,9 @@ pacman::p_load(
   "fitdistrplus",
   "AER",
   "mctest", 
-  "boot"
+  "boot", 
+  "broom",
+  "TidyDensity"
 )
 
 
@@ -814,17 +816,29 @@ glm.diag.plots(diesel.nb.mod, leuk.diag)
 
 
 
-
-######### REFACTOR CODE ###########
-
-
-# Loop through variables and perform poisson
-# Create df with results
+######### Summary Results All At Once ###########
 
 
+# print out poisson regression results for all variables
+map_df(
+  set_names(names(research_data[5:17])),
+  ~ glm(formula(paste(
+    "fatality_number ~ ", .x
+  )), data = research_data, family = "poisson") %>%
+    tidy(conf.int = TRUE, p.value = TRUE)
+) %>%
+  filter(term != "(Intercept)")
 
 
-
+# print out negative binomial regression results for all variables
+map_df(
+  set_names(names(research_data[5:17])),
+  ~ glm.nb(formula(paste(
+    "fatality_number ~ ", .x
+  )), data = research_data) %>%
+    tidy(conf.int = TRUE, p.value = TRUE)
+) %>%
+  filter(term != "(Intercept)")
 
 
 
