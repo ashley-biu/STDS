@@ -218,20 +218,20 @@ load_NSW_population_data <- function(research_data){
   nsw_youth_prop_quarterly <- nsw_totalpop_quarterly %>% 
     filter(age %in% youth_group) %>% 
     group_by(time_frame) %>%
-    dplyr::summarize(youth_proportion = sum(tot_pop_num, na.rm = TRUE) / 1000000) %>%
+    dplyr::summarize(youth_proportion_in_millions = sum(tot_pop_num, na.rm = TRUE) / 1000000) %>%
     as.data.frame()
   
   # total population summarise by time frame only in millions
   nsw_totalpop_quarterly <- nsw_population %>%
     group_by(time_frame) %>%
-    dplyr::summarize(tot_pop_num = sum(OBS_VALUE, na.rm = TRUE) / 1000000) %>%
+    dplyr::summarize(tot_pop_num_in_millions = sum(OBS_VALUE, na.rm = TRUE) / 1000000) %>%
     as.data.frame()
   
   #new df
   nsw_pop <- data.frame(
     nsw_totalpop_quarterly$time_frame, 
-    nsw_totalpop_quarterly$tot_pop_num,
-    nsw_youth_prop_quarterly$youth_proportion
+    nsw_totalpop_quarterly$tot_pop_num_in_millions,
+    nsw_youth_prop_quarterly$youth_proportion_in_millions
   )
   
   names(nsw_pop) <- c('time_frame', 'tot_pop_num', 'youth_proportion')   
