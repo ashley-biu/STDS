@@ -234,7 +234,7 @@ load_NSW_population_data <- function(research_data){
     nsw_youth_prop_quarterly$youth_proportion_in_millions
   )
   
-  names(nsw_pop) <- c('time_frame', 'tot_pop_num', 'youth_proportion')   
+  names(nsw_pop) <- c('time_frame', 'tot_pop_num_in_millions', 'youth_proportion_in_millions')   
   
   # add annual young age group proportion for NSW to final analysis data
   research_data <- merge(research_data, nsw_pop, by="time_frame")
