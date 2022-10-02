@@ -53,12 +53,11 @@ load_crash_data <- function(research_data){
     TRUE ~ NA_character_
   ))
   
+
+  # count fatality by quarter and year
   fatalities_by_quarter_and_year <- crashes_with_quarter %>%
-    count(quarter, year)
-  
-  # rename count column to fatality number
-  names(fatalities_by_quarter_and_year)[which(names(fatalities_by_quarter_and_year) == "n")] <-
-    "fatality_number"
+    group_by(quarter,year) %>%
+    summarise(fatality_number = sum(fatality_num))
   
   fatalities_by_quarter_and_year$time_frame <- paste(fatalities_by_quarter_and_year$year,fatalities_by_quarter_and_year$quarter, sep = "-")
  
@@ -134,8 +133,8 @@ load_CPI_data <- function(research_data) {
     between(month, 10, 12) ~ paste(year,"-Q4", sep = ""),
   ))
   
-  # convert date to date format.
   
+  # convert date to date format.
   cpi_quarterly <- cpi_data %>%
     group_by(time_frame) %>%
     dplyr::summarize(CPI = mean(cpi_per_quarter, na.rm = TRUE)) %>%
