@@ -45,6 +45,7 @@ load_crash_data <- function(research_data){
   nsw_fatal_crashes <- fatal_crashes %>%
     filter(state == "NSW")
   
+  # update date grouping to quarters
   crashes_with_quarter <- nsw_fatal_crashes %>% mutate(quarter = case_when(
     between(month, 1, 3) ~ "Q1",
     between(month, 4, 6) ~ "Q2",
@@ -53,15 +54,13 @@ load_crash_data <- function(research_data){
     TRUE ~ NA_character_
   ))
   
+  #summarise data into quarters
   fatalities_by_quarter_and_year <- crashes_with_quarter %>%
-    count(quarter, year)
-  
-  # rename count column to fatality number
-  names(fatalities_by_quarter_and_year)[which(names(fatalities_by_quarter_and_year) == "n")] <-
-    "fatality_number"
+    group_by(quarter, year) %>%
+    summarise(fatality_number = sum(fatality_num))
   
   fatalities_by_quarter_and_year$time_frame <- paste(fatalities_by_quarter_and_year$year,fatalities_by_quarter_and_year$quarter, sep = "-")
- 
+  
   # create new DF and add yearly fatalities
   research_data <- fatalities_by_quarter_and_year
   
@@ -135,13 +134,13 @@ load_CPI_data <- function(research_data) {
   ))
   
   # convert date to date format.
-  
   cpi_quarterly <- cpi_data %>%
     group_by(time_frame) %>%
     dplyr::summarize(CPI = mean(cpi_per_quarter, na.rm = TRUE)) %>%
     as.data.frame
   
   research_data <- merge(research_data, cpi_quarterly)
+  
   return(research_data)
 }
 
@@ -233,9 +232,12 @@ load_NSW_population_data <- function(research_data){
   
   # convert nsw population df to tibble
   nsw_population <- as_tibble(nsw_population)
+  
+  # rename two key columns
   nsw_population <- nsw_population %>% rename(time_frame = `TIME_PERIOD: Time Period`,
                                               age = `AGE: Age`)
   
+  # new df with summarised nsw population by time frame and age
   nsw_totalpop_quarterly <- nsw_population %>%
     group_by(time_frame, age) %>%
     dplyr::summarize(tot_pop_num = sum(OBS_VALUE, na.rm = TRUE)) %>%
@@ -245,16 +247,17 @@ load_NSW_population_data <- function(research_data){
   youth_group <-
     c("A04: 0-4", "A59: 5-9", "A10: 10-14", "A15: 15-19", "A20: 20-24")
   
-  #summarise by quarterly total
+  # new df with summarised youth population by quarterly total in millions
   nsw_youth_prop_quarterly <- nsw_totalpop_quarterly %>% 
     filter(age %in% youth_group) %>% 
     group_by(time_frame) %>%
-    dplyr::summarize(youth_proportion = sum(tot_pop_num, na.rm = TRUE)) %>%
+    dplyr::summarize(youth_proportion = sum(tot_pop_num, na.rm = TRUE) / 1000000) %>%
     as.data.frame()
   
+  # total population summarise by time frame only in millions
   nsw_totalpop_quarterly <- nsw_population %>%
     group_by(time_frame) %>%
-    dplyr::summarize(tot_pop_num = sum(OBS_VALUE, na.rm = TRUE)) %>%
+    dplyr::summarize(tot_pop_num = sum(OBS_VALUE, na.rm = TRUE) / 1000000) %>%
     as.data.frame()
   
   #new df
@@ -272,7 +275,7 @@ load_NSW_population_data <- function(research_data){
   return(research_data)
 }
 
-# AUS GDP PER CAP DATA ---------------------------
+# AUS GDP PER CAPITA DATA ---------------------------
 
 load_GDP_data <- function(research_data) {
   
@@ -283,11 +286,12 @@ load_GDP_data <- function(research_data) {
   # convert gdp dataset to tibble
   gdp_qrtly <- as_tibble(gdp_qrtly)
   
-  gdp_qrtly <- rename(gdp_qrtly, time_frame = `TIME_PERIOD: Time Period`)
+  # rename key columns
+  gdp_qrtly <- rename(gdp_qrtly, time_frame = `TIME_PERIOD: Time Period`, gdp_per_capita = 'OBS_VALUE')
   
+  # select columns needed
   gdp_qrtly <- gdp_qrtly %>%
-    group_by(time_frame) %>%
-    dplyr::summarize(gdp_per_capita = mean(OBS_VALUE, na.rm = TRUE)) %>%
+    dplyr::select("time_frame", "gdp_per_capita") %>%
     as.data.frame()
   
   # add annual GDP yearly to final analysis data
@@ -354,7 +358,6 @@ load_registration_data <- function(research_data) {
     between(month, 10, 12) ~ paste(year,"-Q4", sep = ""),
   ))
   
-  
   nsw_vehicles_light <- nsw_vehicles_light %>% mutate(time_frame = case_when(
     between(month, 1, 3) ~ paste(year,"-Q1", sep = ""),
     between(month, 4, 6) ~ paste(year,"-Q2", sep = ""),
@@ -401,7 +404,6 @@ load_registration_data <- function(research_data) {
   
   # add registered vehicles in millions to final analysis data
   research_data <- merge(research_data, registered_vehicles_quarterly,  by = "time_frame")
-  
   
   return(research_data)
 }
@@ -643,7 +645,7 @@ load_petrol_price_data <- function(research_data) {
   research_data <- merge(research_data, petrol_diesel_prices_quarterly)
   
   return(research_data)
-
+  
 }
 
 
@@ -663,5 +665,4 @@ load_datasets <- function() {
   
   return(research_data)
 }
-
 
