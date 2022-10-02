@@ -67,39 +67,6 @@ load_crash_data <- function(research_data){
   return(research_data)
 }
 
-# PETROL DATA ---------------------------
-
-load_petrol_data <- function(research_data) {
-  
-  # Read in dataset
-  petrol <-
-    read_excel("Data/AIP_Annual_Retail_Price_Data.xlsx",
-               sheet = "Average Petrol Retail")
-  
-  # Convert petrol dataset to tibble
-  petrol <- as_tibble(petrol)
-  
-  # Remove subheading rows
-  petrol <-  petrol[3:22, ]
-  
-  # Rename Petrol year column
-  names(petrol)[which(names(petrol) == "AVERAGE PETROL RETAIL PRICE")] <-
-    "year"
-  
-  # Select Petrol prices for NSW
-  nsw_petrol <- petrol %>%
-    dplyr::select("year", "NSW")
-  
-  # Rename NSW column to avg_petrol_price
-  names(nsw_petrol)[2] <- c("avg_petrol_price")
-  
-  # Join petrol dataset to research DF with similar years
-  # (It will discard years that are not similar for exploratory purposes)
-  research_data <- merge(research_data, nsw_petrol)
-  
-  return(research_data)
-}
-
 # CPI DATA  ---------------------------
 
 load_CPI_data <- function(research_data) {
@@ -287,18 +254,20 @@ load_GDP_data <- function(research_data) {
   gdp_qrtly <- as_tibble(gdp_qrtly)
   
   # rename key columns
-  gdp_qrtly <- rename(gdp_qrtly, time_frame = `TIME_PERIOD: Time Period`, gdp_per_capita = 'OBS_VALUE')
+  gdp_qrtly <- rename(gdp_qrtly, time_frame = `TIME_PERIOD: Time Period`, gdp_per_capita = 'OBS_VALUE', measure = `MEASURE: Measure`)
   
-  # select columns needed
-  gdp_qrtly <- gdp_qrtly %>%
+  # select columns and rows needed
+  gdp_per_capita_qrtly <- gdp_qrtly %>%
+    dplyr::filter(measure == "M1: Chain volume measures") %>%
     dplyr::select("time_frame", "gdp_per_capita") %>%
     as.data.frame()
   
   # add annual GDP yearly to final analysis data
-  research_data <- merge(research_data, gdp_qrtly, by="time_frame")
+  research_data <- merge(research_data, gdp_per_capita_qrtly , by="time_frame")
   
   return(research_data)
 }
+
 
 # NSW REGISTRATION DATA ---------------------------
 
@@ -646,6 +615,8 @@ load_petrol_price_data <- function(research_data) {
   
   return(research_data)
   
+  view(research_data)
+  
 }
 
 
@@ -665,4 +636,5 @@ load_datasets <- function() {
   
   return(research_data)
 }
+
 
