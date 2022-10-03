@@ -9,6 +9,7 @@
 library(pacman)
 library(caret)
 
+set.seed(42)
 # use pacman to load variables being used
 pacman::p_load(
   "modelr",
@@ -51,9 +52,11 @@ cpi.pos.mod <-  train(fatality_number ~ ., data=research_data, family="poisson",
                       trainControl = train_control)
 
 
+
 # Display Summary Statistics 
 print(cpi.pos.mod)
 summary(cpi.pos.mod)
+aictab(cand.set = models, modnames = mod.names)
 
 
 # Display Coeeficients
@@ -77,3 +80,5 @@ dispersiontest(cpi.pos.mod)
 cpi.nb.mod <- train(fatality_number ~ ., family = negative.binomial,
                     data = research_data,
                     trainControl= train_control)
+
+print(cpi.nb.mod)
