@@ -23,9 +23,9 @@ splits <- crossv_kfold(research_data, k = 3)
 
 research_data
 
-glm.poisson <- glm(fatality_number ~ CPI + employment_rate +
-                youth_proportion + gdp_per_capita +
-                vehicles_registered_in_millions + TWI_data,
+glm.poisson <- glm(fatality_number ~ CPI + gdp_per_capita + employment_rate +
+                youth_proportion_in_millions + registered_motorcycles + registered_heavy_vehicles +
+                registered_light_vehicles+vehicles_registered_in_millions + TWI_data,
                 family = poisson(),
                 data = research_data)
 
@@ -81,14 +81,14 @@ colnames(research_data)
 dispersions
 
 #creating poisson model with all explanatory variables to check for dispersion
-poisson_complete <- glm(fatality_number ~ CPI + employment_rate + youth_proportion + gdp_per_capita + vehicles_registered_in_millions + TWI_data,
-            family = poisson(),
+poisson_complete <- glm(fatality_number ~ .,
+                        family = poisson(),
             data = research_data)
 
 deviance(poisson_complete) / df.residual(poisson_complete)
 
 #create poisson model with explanatory variables with low dispersion
-poisson_good_dispersion <- glm(fatality_number ~ CPI + youth_proportion + gdp_per_capita + vehicles_registered_in_millions,
+poisson_good_dispersion <- glm(fatality_number ~ .,
             family = poisson(),
             data = research_data)
 deviance(poisson_good_dispersion) / df.residual(poisson_complete)
@@ -96,7 +96,7 @@ deviance(poisson_good_dispersion) / df.residual(poisson_complete)
 
 
 glm.negative_binomial <- glm.nb(fatality_number ~ CPI + employment_rate +
-                youth_proportion + gdp_per_capita +
+                youth_proportion_in_millions + gdp_per_capita +
                 vehicles_registered_in_millions + TWI_data,
                 data = research_data)
 
@@ -116,3 +116,4 @@ raw_residual
 standardized_residual
 plot(raw_residual)
 plot(standardized_residual)
+
