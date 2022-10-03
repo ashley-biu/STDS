@@ -1,5 +1,5 @@
 ##### GUIDE #####
-# Before running, go to the file "data loader and run the whole sciptt"
+# Before running, go to the file "data_loader.R and run the whole sciptt"
 # Then run this one
 # NOTE: make sure you set your current directory to the folder STDS_AT2_2022
 
