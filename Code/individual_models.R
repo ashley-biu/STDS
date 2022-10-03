@@ -1,11 +1,4 @@
-##### GUIDE #####
-# Before running, go to the file "data_loader.R and run the whole sciptt"
-# Then run this one
-# NOTE: make sure you set your current directory to the folder STDS_AT2_2022
-
-
-
-# import libraries
+# import pacman
 library(pacman)
 
 # use pacman to load variables being used
@@ -29,10 +22,13 @@ pacman::p_load(
 )
 
 
-# import data
+
+# import data-loader file
+source("Code/data-loader.R")
+
+
+# # import data
 research_data <- load_datasets()
-
-
 
 
 ########### CPI
