@@ -104,16 +104,3 @@ summary(poisson_complete)
 summary(glm.negative_binomial)
 
 anova(poisson_complete, glm.negative_binomial, test = "Chisq")
-
-
-
-#maybe compare residuals?????
-E.fatality_number_nb <- predict(glm.negative_binomial, type = "response")
-
-raw_residual <- research_data$fatality_number - E.fatality_number
-standardized_residual <- (research_data$fatality_number - E.fatality_number) / sqrt(E.fatality_number)
-raw_residual
-standardized_residual
-plot(raw_residual)
-plot(standardized_residual)
-
